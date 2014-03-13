@@ -1,0 +1,1 @@
+mvn eclipse:eclipse -D wtpversion=2.0
