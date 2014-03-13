@@ -1,0 +1,131 @@
+<!--
+<project-directory>
+   - src
+      -main
+         - axis2
+            <all-wsdl-and-xsd-files>
+         - java
+            <all-src-code>
+         - resources
+            - META-INF
+               services.xml
+
+To generate code:
+$ mvn clean package
+
+(if you don't have a service.xml file yet, you can add a generateServicesXml 
+(set to true) in the axis2-wsdl2code plugin configuration to generate a 
+services.xml (created in the target/generated-sources/axis2/wsdl2code/resources)
+file then modify it with the correct service implementation class from your 
+source tree and move it to the resources/META-INF folder and remove the 
+generateServicesXml configuration setting)
+
+To build your .aar file:
+$ mvn clean package
+
+To deploy your .aar to a local or remote axis2 instance:
+$ mvn clean install
+
+(add a axis2AdminConsoleURL property to the deployaar configuration to specify 
+the location of the admin console of axis2. the default: 
+http://localhost:8080/axis2/axis2-admin) 
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.creacon</groupId>
+	<artifactId>HelloWorld</artifactId>
+	<version>0.0.1</version>
+	<name>ws-arr</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2</artifactId>
+			<version>1.5</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-jaxbri</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>arr-service</finalName>
+		<plugins>
+		      <plugin>
+		        <groupId>org.apache.axis2</groupId>
+		        <artifactId>axis2-java2wsdl-maven-plugin</artifactId>
+		        <version>1.5</version>
+		        <configuration>
+		          <className>com.creacon.Converter</className>
+		        </configuration>
+		        <executions>
+		          <execution>
+		            <goals>
+		              <goal>java2wsdl</goal>
+		            </goals>
+		          </execution>
+		         </executions>
+		      </plugin>
+			<plugin>
+				<groupId>org.apache.axis2</groupId>
+				<artifactId>axis2-aar-maven-plugin</artifactId>
+				<version>1.5</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>aar</id>
+						<goals>
+							<goal>aar</goal>
+						</goals>
+						<configuration>
+							<fileSets>
+								<fileSet>
+									<directory>src/main/axis2</directory>
+									<outputDirectory>META-INF</outputDirectory>
+									<includes>
+										<include>**/*.xml</include>
+										<include>**/*.xsd</include>
+										<include>**/*.wsdl</include>
+									</includes>
+								</fileSet>
+							</fileSets>
+						</configuration>
+					</execution>
+					<execution>
+						<id>deployaar</id>
+						<goals>
+							<goal>deployaar</goal>
+						</goals>
+						<phase>install</phase>
+						<configuration>
+							<axis2AdminUser>admin</axis2AdminUser>
+							<axis2AdminPassword>axis2</axis2AdminPassword>
+							<aarDirectory>${project.build.directory}</aarDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>			
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

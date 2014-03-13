@@ -3,3 +3,6 @@
 /Creacon/.project
 /Creacon/.classpath
 /Creacon/.settings
+
+/Creacon/ws-aar/target
+/Creacon/ws-client/target

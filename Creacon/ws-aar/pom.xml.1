@@ -139,6 +139,20 @@ he/she already has a copy in src/main/java.
 					<target>1.7</target>
 				</configuration>
             </plugin>
+		      <plugin>
+		        <groupId>org.apache.axis2</groupId>
+		        <artifactId>axis2-java2wsdl-maven-plugin</artifactId>
+		        <configuration>
+		          <className>com.creacon.Converter</className>
+		        </configuration>
+		        <executions>
+		          <execution>
+		            <goals>
+		              <goal>java2wsdl</goal>
+		            </goals>
+		          </execution>
+		         </executions>
+		      </plugin>            
             <plugin>
                 <groupId>org.apache.axis2</groupId>
                 <artifactId>axis2-aar-maven-plugin</artifactId>

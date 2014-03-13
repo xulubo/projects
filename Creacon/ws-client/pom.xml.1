@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.creacon</groupId>
+    <artifactId>ws-aar</artifactId>
+    <packaging>aar</packaging>
+    <name>ws-aar</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <profiles>
+        <!--
+            Profile for axis and xmlbeans source generation. It will activate if the directory
+            target/generated-sources does not exist. Therefore, it will only run once
+            or every time a clean is made.
+        -->
+        <profile>
+            <id>sourcegen</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <file>
+                    <missing>target/generated-sources</missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.3</version>
+                        <executions>
+                            <!--
+                                Execution for generating the xmlbeans classes and .xsb It is used
+                                instead of xmlbeans-maven-plugin because this plugin does not
+                                support wsdl files. See http://jira.codehaus.org/browse/MXMLBEANS-42
+                            -->
+                            <execution>
+                                <id>xmlbeans-source-code-generation</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <java classname="org.apache.xmlbeans.impl.tool.SchemaCompiler"
+                                            fork="true">
+                                            <arg
+                                                line="
+                                                -javasource 1.5
+                                                -srconly
+                                                -src target/generated-sources/xmlbeans 
+                                                -d target/generated-sources/xmlbeans
+                                                src/main/wsdl 
+                                                src/main/xsd
+                                                src/main/xsd/NStoPkg.xsdconfig" />
+                                            <classpath refid="maven.dependency.classpath"/>
+                                            <classpath refid="maven.compile.classpath"/>
+                                            <classpath refid="maven.runtime.classpath"/>
+                                        </java>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                            <!-- 
+                                Execution for generation the axis service side classes.
+                                It is used instead of axis2-wsdl2code-maven-plugin because
+                                this plugins does not have all the command line options (such as -Ewdc).
+                                After code generation, the developer must copy the service implementation classes in target/generated-sources/axis2/
+to src/main/java. 
+                                Usually  it is every class that does not extends 
+                                org.apache.xmlbeans.XmlObject  i.e. Skeleton, MessageReceiver, Faults.  The developer may not want to copy these files if
+he/she already has a copy in src/main/java.
+                                It would be a nice feature to copy them automatically 
+                                if they do not exist but the "everything that does not extend
+
+                                XmlObject" part seems difficult
+                            -->
+                            <execution>
+                                <id>axis2-source-code-generation</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <java classname="org.apache.axis2.wsdl.WSDL2Java" fork="true">
+                                            <!-- the WSDL file should be defined in the arg line -->
+                                            <arg
+                                                line="
+                                        -o target/generated-sources/axis2/
+                                        -ss
+                                        -sd
+                                        -d xmlbeans
+                                        -Ewdc 
+                                        --noBuildXML 
+                                        -uri src/main/wsdl/WSSomeService.wsdl" />
+                                            <classpath refid="maven.dependency.classpath"/>
+                                            <classpath refid="maven.compile.classpath"/>
+                                            <classpath refid="maven.runtime.classpath"/>
+                                        </java>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <!--
+                            Execution that adds the directory target/generated-sources/xmlbeans
+                            as a source directory. It contains the generated classes of xmlbeans
+                         -->
+                        <executions>
+                            <execution>
+                                <id>add-source</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>target/generated-sources/xmlbeans
+                                        </source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+            </plugin>
+		      <plugin>
+		        <groupId>org.apache.axis2</groupId>
+		        <artifactId>axis2-java2wsdl-maven-plugin</artifactId>
+		        <configuration>
+		          <className>com.creacon.Converter</className>
+		        </configuration>
+		        <executions>
+		          <execution>
+		            <goals>
+		              <goal>java2wsdl</goal>
+		            </goals>
+		          </execution>
+		         </executions>
+		      </plugin>            
+            <plugin>
+                <groupId>org.apache.axis2</groupId>
+                <artifactId>axis2-aar-maven-plugin</artifactId>
+                <version>1.4.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!--
+                        This fileset includes the services.xml, wsdl and xsd that were
+                        used when generating axis and xmlbeans classes. This must be
+                        included in the aar in order to obtain the wsdl and xsd. Also,
+                        services.xml should be included or else axis2 will not deploy
+                        the webservice.
+                        The schemaorg_apache_xmlbeans directory is excluded since we need
+                        the one generated by xmlbeans and not by axis2.
+                     -->
+                    <fileSets>
+                        <fileSet>
+                            <directory>target/generated-sources/axis2/resources</directory>
+                            <outputDirectory>META-INF</outputDirectory>
+                            <includes>
+                                <include>*.xml</include>
+                                <include>*.xsd</include>
+                                <include>*.wsdl</include>
+                            </includes>
+                            <excludes>
+                                <exclude>schemaorg_apache_xmlbeans/**/*
+                                </exclude>
+                            </excludes>
+                        </fileSet>
+                    </fileSets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- 
+        Most, if not all, axis2 dependencies are under the 'provided' scope
+        since we do not want to have huge aar files. A dependant project
+        should use this project artifact to build a war, the dependant project
+        should include the axis2 jars in its WEB-INF/lib 
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2</artifactId>
+            <version>1.4.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-java2wsdl</artifactId>
+            <version>1.4.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-xmlbeans</artifactId>
+            <version>1.4.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

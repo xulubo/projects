@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.3/servlet-api-2.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4/mail-1.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/axis2/axis2-jaxbri/1.5/axis2-jaxbri-1.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/axis2/axis2-codegen/1.5/axis2-codegen-1.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/axis2/axis2-kernel/1.5/axis2-kernel-1.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ws/commons/axiom/axiom-api/1.2.8/axiom-api-1.2.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-activation_1.1_spec/1.0.1/geronimo-activation_1.1_spec-1.0.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.2/geronimo-javamail_1.4_spec-1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jaxen/jaxen/1.1.1/jaxen-1.1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0.1/geronimo-stax-api_1.0_spec-1.0.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ws/commons/axiom/axiom-impl/1.2.8/axiom-impl-1.2.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/woodstox/wstx-asl/3.2.4/wstx-asl-3.2.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ws/commons/axiom/axiom-dom/1.2.8/axiom-dom-1.2.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-ws-metadata_2.0_spec/1.1.2/geronimo-ws-metadata_2.0_spec-1.1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/geronimo/specs/geronimo-jta_1.1_spec/1.1/geronimo-jta_1.1_spec-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.2/commons-codec-1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-fileupload/commons-fileupload/1.2/commons-fileupload-1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/wsdl4j/wsdl4j/1.6.2/wsdl4j-1.6.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ws/commons/schema/XmlSchema/1.4.3/XmlSchema-1.4.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/neethi/neethi/2.0.4/neethi-2.0.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/woden/woden-api/1.0M8/woden-api-1.0M8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ant/ant/1.7.0/ant-1.7.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/xerces/xmlParserAPIs/2.6.0/xmlParserAPIs-2.6.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/woden/woden-impl-dom/1.0M8/woden-impl-dom-1.0M8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/xalan/xalan/2.7.0/xalan-2.7.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/axis2/axis2-adb/1.5/axis2-adb-1.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.1.7/jaxb-impl-2.1.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-xjc/2.1.7/jaxb-xjc-2.1.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.8.2/junit-4.8.2.jar"/>
+</classpath>

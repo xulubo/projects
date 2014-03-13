@@ -35,16 +35,16 @@ http://localhost:8080/axis2/axis2-admin)
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.creacon</groupId>
-	<artifactId>service</artifactId>
+	<artifactId>HelloWorld</artifactId>
 	<version>0.0.1</version>
-	<name>ws-arr</name>
+	<name>ws-client</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.axis2</groupId>
 			<artifactId>axis2</artifactId>
 			<version>1.5</version>
 			<type>pom</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis2</groupId>
@@ -60,47 +60,9 @@ http://localhost:8080/axis2/axis2-admin)
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>arr-service</finalName>
+		<finalName>ws-client</finalName>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.axis2</groupId>
-				<artifactId>axis2-aar-maven-plugin</artifactId>
-				<version>1.5</version>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<id>exploded</id>
-						<goals>
-							<goal>exploded</goal>
-						</goals>
-						<configuration>
-							<fileSets>
-								<fileSet>
-									<directory>src/main/axis2</directory>
-									<outputDirectory>META-INF</outputDirectory>
-									<includes>
-										<include>**/*.xml</include>
-										<include>**/*.xsd</include>
-										<include>**/*.wsdl</include>
-									</includes>
-								</fileSet>
-							</fileSets>
-						</configuration>
-					</execution>
-					<execution>
-						<id>deployaar</id>
-						<goals>
-							<goal>deployaar</goal>
-						</goals>
-						<phase>install</phase>
-						<configuration>
-							<axis2AdminUser>admin</axis2AdminUser>
-							<axis2AdminPassword>axis2</axis2AdminPassword>
-							<aarDirectory>${project.build.directory}</aarDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.axis2</groupId>
 				<artifactId>axis2-wsdl2code-maven-plugin</artifactId>
@@ -117,12 +79,12 @@ http://localhost:8080/axis2/axis2-admin)
 							<generateServicesXml>true</generateServicesXml>
  -->
 							<generateServerSideInterface>true</generateServerSideInterface>
-							<packageName>com.example.service</packageName>
+							<packageName>com.creacon.HelloWorld</packageName>
 							<databindingName>jaxbri</databindingName>
 							<namespaceURIs>
 								<namespaceURI>
-									<uri>http://www.example.com/service</uri>
-									<packageName>com.example.service</packageName>
+									<uri>http://www.example.com/HelloWorld</uri>
+									<packageName>com.example.HelloWorld</packageName>
 								</namespaceURI>
 							</namespaceURIs>
 						</configuration>
