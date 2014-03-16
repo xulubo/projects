@@ -6,8 +6,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>ws-app</module>
     <module>ws-aar</module>
+    <module>ws-app</module>
   </modules>
   
 	<build>
