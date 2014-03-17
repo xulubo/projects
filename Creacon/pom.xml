@@ -7,6 +7,7 @@
 
   <modules>
     <module>ws-aar</module>
+    <module>ws-client</module>
     <module>ws-app</module>
   </modules>
   
